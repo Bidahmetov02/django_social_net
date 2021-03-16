@@ -1,3 +1,7 @@
 $(document).ready(function() {
-	console.log("Working from main")
+	$('#modal-btn').click(function() {
+		$('.ui.modal')
+		.modal('show')
+		;
+	})
 })

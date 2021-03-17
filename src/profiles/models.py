@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from .utils import get_random_code
 from django.template.defaultfilters import slugify
-
 # Create your models here.
 class Profile(models.Model):
 	first_name = models.CharField(max_length=200, blank=True)
@@ -22,6 +21,27 @@ class Profile(models.Model):
 
 	def get_friends_no(self):
 		return self.friends.all().count()
+
+	def get_posts_no(self):
+		return self.posts.all().count()
+
+	def get_all_authors_posts(self):
+		return self.posts.all()
+
+	def get_likes_given_no(self):
+		likes = self.like_set.all()
+		total_liked = 0
+		for i in likes:
+			if i.value == 'Like':
+				total_liked += 1
+		return total_liked
+
+	def get_likes_received_no(self):
+		posts = self.posts.all()
+		total_liked = 0
+		for i in posts:
+			total_liked += i.num_likes()
+		return total_liked
 
 	def __str__(self):
 		return f'{self.user.username}-{self.created.strftime("%d-%m-%Y")}'

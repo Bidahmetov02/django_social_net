@@ -2,8 +2,9 @@
 {% url 'home_view' as path_to_home %}
 {% url 'profiles:my-profile-view' as path_to_my_profile %}
 {% url 'profiles:invites-received-view' as path_to_my_invites %}
-{% url 'profiles:invite-profiles-view' as path_to_invites %}
+{# {% url 'profiles:invite-profiles-view' as path_to_invites %} #}
 {% url 'profiles:all-profiles-view' as path_to_all_profiles %}
+{% url 'profiles:my_friends_view' as path_to_my_friends %}
 
 <div class="ui inverted menu nav mb-7">
   <div class="ui container">
@@ -22,12 +23,13 @@
             <div class="ui floating dropdown icon button teal"> Friends
                 <i class="dropdown icon"></i>
                 <div class="menu">
+                    <a href="{{path_to_my_friends}}" class="{% if request.path == path_to_my_friends %}active{% endif %} item">
+                        My Friends
+                    </a>
                     <a href="{{path_to_all_profiles}}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item">
                         All Profiles
                     </a>
-                    <a href="{{path_to_invites}}" class="{% if request.path == path_to_invites %}active{% endif %} item">
-                        Send Invites
-                    </a>
+                
                     <a href="{{path_to_my_invites}}" class="{% if request.path == path_to_my_invites %}active{% endif %} item">
                         Received Invites &nbsp; <div class="ui purple horizontal label">{{invites_num}}</div>
                     </a>
@@ -35,7 +37,7 @@
              </div>
         </div>
              <div class="item">
-              <form action="" method="GET">
+              <form action="{% url 'profiles:search_view' %}" method="GET">
                 <div class="ui action left icon input">
                 <input class="prompt" type="text" name='q' placeholder="name of a friend...">
                 <i class="search icon"></i>

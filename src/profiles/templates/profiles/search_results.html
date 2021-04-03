@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}All Profiles{% endblock %}
+{% block title %}Search results for "{{lookup}}"{% endblock %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
 		<h1>No profiles found!</h1>
 	{% endif %}
 
-	{% for obj in qs %}
+	{% for obj in results %}
 		<div class="ui segment">
 			<div class="ui grid">
 				<div class="row">
@@ -50,4 +50,3 @@
 	{% endfor %}
 
 {% endblock %}
-

@@ -34,32 +34,33 @@
                     <form action="{% url 'posts:like-post-view' %}" method="POST" class="like-form" id="{{obj.id}}">
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value={{obj.id}}>
+                        <div class="flex">
                             <button type="submit" class="ui button like-btn{{obj.id}}">
                                 {% if profile not in obj.liked.all %}
                                     Like
                                 {% else %}
                                     Unlike
                                 {% endif %}
+                                
                             </button>
-                            <div class="ui grid">
-                                <div class="column">
-                                    <div class="like-count{{obj.id}}"> {{obj.num_likes}} </div>
+                            <div class="flex">
+                                <div>
+                                    <i class="fas fa-heart fa-2x" style="color: #a335cb"></i>
                                 </div>
-                                <div class="column">
-                                    likes
+                                <div>
+                                    <div class="like-count{{obj.id}}" style="font-size: 20px"> {{obj.num_likes}} </div>
                                 </div>
                             </div>
-                            
+                        </div>
+
                     </form>
                 </div>
-                <i class="comment icon"></i>
-                <span> {{ obj.num_comments }} comments</span>
             </div>
             <div class="extra content">
                 <div class="mb-5">
                   
                 </div>
-                <button class="cmt_btn ui button mb-5">show / hide comments</button>
+                <button class="cmt_btn ui button mb-5">Comments &nbsp;<div class="ui purple horizontal label">{{obj.num_comments}}</div></button>
                 <div class="comment-box">
                 {% if obj.comment_set.all %}
                     {% for c in obj.comment_set.all %}

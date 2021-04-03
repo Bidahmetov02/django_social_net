@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}All Profiles{% endblock %}
+
+{% block content %}
+
+	{% if is_empty %}
+		<h1>No profiles found!</h1>
+	{% endif %}
+
+	{% for obj in qs %}
+		<div class="ui segment">
+			<div class="ui grid">
+				<div class="row">
+					<div class="three wide column">
+						<img src="{{obj.avatar.url}}" class="ui small circular image" alt="">
+					</div>
+					<div class="thirteen wide column">
+						<h3>Username: {{obj.user}}</h3>
+						<h3>First Name: {{obj.first_name}}</h3>
+						<h3>Last Name: {{obj.last_name}}</h3>
+						<p>{{obj.bio}}</p>
+						<a href="{{obj.get_absolute_url}}"><button class="ui primary button mb-5 w-big">See profile</button></a>
+						<br>
+
+						<form action="{% url 'profiles:remove-friend' %}" method="POST">
+							{% csrf_token %}
+							<input type="hidden" name="profile_pk" value="{{obj.pk}}">				
+							<button type="submit" class="ui button nagative mb-5 w-big"><i class="minus square icon"></i>Remove Friend</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+{% endblock %}
+

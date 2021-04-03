@@ -42,6 +42,33 @@ def invites_received_view(request):
 
 	return render(request, 'profiles/my_invites.html', ctx)
 
+def search_view(request):
+	sr = request.GET.get('q')
+	is_empty = False
+
+	first_name = set(Profile.objects.filter(first_name__icontains = sr))
+	last_name = set(Profile.objects.filter(last_name__icontains = sr))
+	usernames = set(User.objects.filter(username__icontains = sr))
+
+	results = first_name | last_name
+
+	for n in usernames:
+		temp = Profile.objects.get(user=n)
+		results.add(temp)
+
+	if results == 0:
+		is_empty = False
+
+	print(results)
+
+	ctx = {
+		'results': results,
+		'is_empty': is_empty,
+		'lookup': sr,
+	}
+
+	return render(request, 'profiles/search_results.html', ctx)
+
 @login_required
 def profiles_list_view(request):
 	user = request.user
@@ -52,6 +79,21 @@ def profiles_list_view(request):
 	}
 
 	return render(request, 'profiles/profile_list.html', ctx)
+
+@login_required
+def my_friends_view(request):
+	user = request.user
+	is_empty = False
+	qs = Profile.get_friends(user)
+	if len(qs) == 0:
+		is_empty = True
+
+	ctx = {
+	'qs':qs, 
+	'is_empty': is_empty,
+	}
+
+	return render(request, 'profiles/my_friends.html', ctx)
 
 @login_required
 def accept_invatation(request):
@@ -77,16 +119,16 @@ def reject_invatation(request):
 		
 	return redirect('profiles:invites-received-view')
 
-@login_required
-def invite_profiles_list_view(request):
-	user = request.user
-	qs = Profile.objects.get_all_profiles_to_invite(user)
+# @login_required
+# def invite_profiles_list_view(request):
+# 	user = request.user
+# 	qs = Profile.objects.get_all_profiles_to_invite(user)
 
-	ctx = {
-		'qs': qs
-	}
+# 	ctx = {
+# 		'qs': qs
+# 	}
 
-	return render(request, 'profiles/to_invite_list.html', ctx)
+# 	return render(request, 'profiles/to_invite_list.html', ctx)
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
 	model = Profile

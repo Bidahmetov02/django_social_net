@@ -2,6 +2,10 @@ body {
 	background: #f8f8f8 !important;
 }
 
+h3 {
+	margin: 0 !important;
+}
+
 .nav {
 	border-radius: 0px !important;
 	padding: 10px 0 10px 0 !important;
@@ -40,4 +44,14 @@ body {
 
 .comment-box {
 	display: none;
+}
+
+.centered-div {
+	text-align: center !important;
+}
+
+.flex {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
 }

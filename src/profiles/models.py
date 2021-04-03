@@ -8,32 +8,32 @@ from django.shortcuts import reverse
 
 class ProfileManager(models.Manager):
 
-	def get_all_profiles_to_invite(self, sender):
-		profiles = Profile.objects.all().exclude(user=sender)
-		profile = Profile.objects.get(user=sender)
-		qs = Relationship.objects.filter(Q(sender=profile) | Q(receiver=profile))
-		print(qs)
-		print("###############")
+# 	def get_all_profiles_to_invite(self, sender):
+# 		profiles = Profile.objects.all().exclude(user=sender)
+# 		profile = Profile.objects.get(user=sender)
+# 		qs = Relationship.objects.filter(Q(sender=profile) | Q(receiver=profile))
+# 		print(qs)
+# 		print("###############")
 
-		accepted = set([])
+# 		accepted = set([])
 
-		for rel in qs:
-			if rel.status == 'accepted':
-				accepted.add(rel.receiver)
-				accepted.add(rel.sender)
-		print(accepted)
-		print("###############")
+# 		for rel in qs:
+# 			if rel.status == 'accepted':
+# 				accepted.add(rel.receiver)
+# 				accepted.add(rel.sender)
+# 		print(accepted)
+# 		print("###############")
 
-		available = [] 
+# 		available = [] 
 
-		for p in profiles:
-			if p not in accepted:
-				available.append(p)
+# 		for p in profiles:
+# 			if p not in accepted:
+# 				available.append(p)
 
-		print(available)
-		print("###############")
+# 		print(available)
+# 		print("###############")
 
-		return available
+# 		return available
 
 	def get_all_profiles(self, me):
 		profiles = Profile.objects.all().exclude(user=me)

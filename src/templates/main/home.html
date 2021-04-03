@@ -5,15 +5,25 @@ Home
 {% endblock %}
 
 {% block content %}
-{{user}}
-<br>
-{{hello}}
+
+	{% if user.is_authenticated %}
+	<div class="centered-div">
+		<h1>Welcome, {{user}}</h1><br><br>
+		<a href="{% url 'posts:main-post-view' %}"><button class="ui button massive primary mb-5">POSTS</button></a><br><br>
+		<a href="{% url 'profiles:my-profile-view' %}"><button class="ui button massive primary mb-5">My Profile</button></a><br><br>
+		<a href="{% url 'profiles:my_friends_view' %}"><button class="ui button massive primary mb-5">My Friends</button></a>
+	</div>
+	{% else %}
+	<div class="centered-div">
+		<h1>Welcome!</h1><br><br>
+		<a href="{% url 'account_login' %}"><button class="ui button massive primary mb-5">LogIn</button></a><br><br>
+		<a href="{% url 'account_signup' %}"><button class="ui button massive primary mb-5">Register</button></a><br>
+	</div>
+	{% endif %}
+
 {% endblock %}
 
 {% block scripts %}
-<script>
-$(document).ready(function() {
-	console.log("Working")
-})
-</script>
+
+
 {% endblock %}
